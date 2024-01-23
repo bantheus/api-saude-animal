@@ -2,18 +2,22 @@
   "name": "api-saude-animal",
   "version": "1.0.0",
   "description": "API RESTful para o gerenciamento de dados veterinários de animais resgatados por ONGs.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Matheus Schmidt",
   "license": "MIT",
+  "main": "index.js",
   "repository": {
     "type": "github",
     "url": "https://github.com/bantheus/api-saude-animal"
   },
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
+    "build": "tsc",
+    "start": "node build"
+  },
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.3.2",
+    "express": "^4.18.2",
+    "http-status-codes": "^2.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
