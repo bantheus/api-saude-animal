@@ -9,6 +9,9 @@ router.get("/", (_, res) => {
   return res.status(StatusCodes.OK).json("API ta joia! 🤙🏻");
 });
 
-router.post("/especies", especiesController.create);
+router.post("/especies",
+  especiesController.createValidation,
+  especiesController.create
+);
 
 export { router };
