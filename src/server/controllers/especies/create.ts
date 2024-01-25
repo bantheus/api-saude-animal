@@ -1,28 +1,35 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { z } from "zod";
 import { IEspecie } from "../../../shared/definitions";
 
-import { z } from "zod";
-
 export const bodyValidation = z.object({
-  nome: z.string({ required_error: "Nome é obrigatório" }).min(3, { message: "Nome deve ter no mínimo 3 caracteres" })
-    .max(255, { message: "Nome deve ter no máximo 255 caracteres" })
+  nome: z.string({ required_error: "Nome é obrigatório" })
+    .min(1, { message: "Nome deve ter no mínimo 1 caracteres" })
+    .max(255, { message: "Nome deve ter no máximo 255 caracteres" }),
 });
 
-export const create = async (req: Request<{}, {}, IEspecie>, res: Response) => {
-
-  let validatedData: IEspecie | undefined;
-
+export const createBodyValidator: RequestHandler = async (req, res, next) => {
   try {
-    validatedData = await bodyValidation.parseAsync(req.body);
-  } catch (error) {
-    const zodError = error as z.ZodError;
+    await bodyValidation.parse(req.body);
+    next();
+  } catch (err) {
+    const zodError = err as z.ZodError;
+    const errors: Record<string, string> = {};
 
-    return res.json({
-      errors: {
-        default: zodError.issues.map((issue) => issue.message)
-      }
+    zodError.issues.forEach(issue => {
+      if (!issue.path) return;
+
+      const path = issue.path.join(".");
+      errors[path] = issue.message;
     });
+
+    return res.status(StatusCodes.BAD_REQUEST).json({ errors });
   }
+};
+
+export const create = async (req: Request<{}, {}, IEspecie>, res: Response) => {
+  let validatedData: IEspecie | undefined;
 
   return res.send(validatedData);
 };
