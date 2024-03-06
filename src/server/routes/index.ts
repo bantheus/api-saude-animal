@@ -14,6 +14,11 @@ router.get("/especies",
   especiesController.getAll
 );
 
+router.get("/especies/:id",
+  especiesController.getByIdValidation,
+  especiesController.getById
+);
+
 router.post("/especies",
   especiesController.createValidation,
   especiesController.create

@@ -1,7 +1,9 @@
 import * as create from "./create";
 import * as getAll from "./get-all";
+import * as getById from "./get-by-id";
 
 export const especiesController = {
   ...create,
-  ...getAll
+  ...getAll,
+  ...getById,
 };
