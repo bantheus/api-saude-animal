@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 import { IEspecie } from "../../../shared/definitions";
 import { validation } from "../../../shared/middlewares";
@@ -13,5 +14,5 @@ export const createValidation = validation((getSchema) => ({
 
 export const create = async (req: Request<{}, {}, IEspecie>, res: Response) => {
 
-  return res.send("OK");
+  return res.status(StatusCodes.CREATED).send("created");
 };
