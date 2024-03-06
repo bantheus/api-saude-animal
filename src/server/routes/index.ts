@@ -9,6 +9,11 @@ router.get("/", (_, res) => {
   return res.status(StatusCodes.OK).json("API ta joia! 🤙🏻");
 });
 
+router.get("/especies",
+  especiesController.getAllValidation,
+  especiesController.getAll
+);
+
 router.post("/especies",
   especiesController.createValidation,
   especiesController.create
