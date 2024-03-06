@@ -24,4 +24,9 @@ router.post("/especies",
   especiesController.create
 );
 
+router.put("/especies/:id",
+  especiesController.updateByIdValidation,
+  especiesController.updateById
+);
+
 export { router };

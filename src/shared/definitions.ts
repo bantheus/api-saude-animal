@@ -11,3 +11,7 @@ export interface IQueryProps {
 export interface IParamProps {
   id?: string;
 }
+
+export interface IBodyProps {
+  nome: string;
+}
