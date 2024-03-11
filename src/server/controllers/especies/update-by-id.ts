@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 import { IBodyProps, IParamProps } from "../../../shared/definitions";
 import { validation } from "../../../shared/middlewares";
@@ -18,5 +19,5 @@ export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res:
   console.log(req.body);
   console.log(req.params);
 
-  return res.send("OK");
+  return res.status(StatusCodes.NO_CONTENT).send();
 };
