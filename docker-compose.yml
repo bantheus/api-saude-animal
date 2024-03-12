@@ -1,0 +1,26 @@
+version: "3.3"
+
+services:
+  db_tests:
+    image: postgres:13
+    restart: always
+    container_name: integration_test_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: tests
+
+  db_dev:
+    image: postgres:13
+    restart: always
+    container_name: dev_db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: dev
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
