@@ -1,7 +1,3 @@
-export interface IEspecie {
-  nome: string;
-}
-
 export interface IQueryProps {
   page?: number;
   limit?: number;
@@ -10,8 +6,4 @@ export interface IQueryProps {
 
 export interface IParamProps {
   id?: string;
-}
-
-export interface IBodyProps {
-  nome: string;
 }

@@ -1,8 +1,11 @@
+import { Especie } from "@prisma/client";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { IBodyProps, IParamProps } from "../../../shared/definitions";
+import { IParamProps } from "../../../shared/definitions";
 import { validation } from "../../../shared/middlewares";
+
+interface IBodyProps extends Omit<Especie, "id" | "createdAt" | "updatedAt"> { }
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(z.object({
