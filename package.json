@@ -15,8 +15,7 @@
     "start": "node build",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "migrate:postgres": "dotenv -e .env.test -- npx prisma migrate deploy",
-    "test": "dotenv -e .env.test npm run docker:up && npm run migrate:postgres && jest -i"
+    "test": "dotenv -e .env.test npm run docker:up && jest -i"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
