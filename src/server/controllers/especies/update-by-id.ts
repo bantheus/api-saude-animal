@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 import { IParamProps } from "../../../shared/definitions";
 import { validation } from "../../../shared/middlewares";
+import { especiesProviders } from "../../providers/especies";
 
 interface IBodyProps extends Omit<Especie, "id" | "createdAt" | "updatedAt"> { }
 
@@ -19,8 +20,23 @@ export const updateByIdValidation = validation((getSchema) => ({
 }));
 
 export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res: Response) => {
-  console.log(req.body);
-  console.log(req.params);
+  if (!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      erros: {
+        default: "ID inválido"
+      }
+    });
+  }
 
-  return res.status(StatusCodes.NO_CONTENT).send();
+  const result = await especiesProviders.updateById(req.params.id, req.body);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      erros: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 };

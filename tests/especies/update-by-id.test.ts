@@ -1,6 +1,21 @@
 import { StatusCodes } from "http-status-codes";
+import { db } from "../../src/server/lib/prisma";
 import { testServer } from "../jest.setup";
 
+beforeAll(async () => {
+  await db.especie.create({
+    data: {
+      id: "f7ecbad9-0fe6-445b-a18c-bb157a554fb8",
+      nome: "Especie 1",
+    }
+  });
+});
+
+afterAll(async () => {
+  const deleteAll = db.especie.deleteMany();
+
+  await db.$transaction([deleteAll]);
+});
 
 describe("Especies - update by id", () => {
 
@@ -8,7 +23,7 @@ describe("Especies - update by id", () => {
     const res2 = await testServer
       .put("/especies/f7ecbad9-0fe6-445b-a18c-bb157a554fb8")
       .send({
-        nome: "Especie 1",
+        nome: "Especie 2",
       });
 
     expect(res2.statusCode).toEqual(StatusCodes.NO_CONTENT);
@@ -18,7 +33,7 @@ describe("Especies - update by id", () => {
     const res = await testServer
       .put("/especies/1")
       .send({
-        nome: "Especie 1",
+        nome: "Especie 2",
 
       });
 
