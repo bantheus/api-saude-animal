@@ -3,7 +3,6 @@ version: "3.3"
 services:
   db_tests:
     image: postgres:13
-    restart: always
     container_name: integration_test_db
     ports:
       - "5432:5432"
