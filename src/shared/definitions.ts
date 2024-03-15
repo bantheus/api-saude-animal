@@ -1,4 +1,5 @@
 export interface IQueryProps {
+  id?: string;
   page?: number;
   limit?: number;
   filter?: string;

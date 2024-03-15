@@ -1,22 +1,33 @@
 import { StatusCodes } from "http-status-codes";
+import { db } from "../../src/server/lib/prisma";
 import { testServer } from "../jest.setup";
+
+beforeAll(async () => {
+  await db.especie.create({
+    data: {
+      id: "f7ecbad9-0fe6-445b-a18c-bb157a554fb8",
+      nome: "Especie 1",
+    }
+  });
+});
+
+afterAll(async () => {
+  const deleteAll = db.especie.deleteMany();
+
+  await db.$transaction([deleteAll]);
+});
 
 
 describe("Especies - get all", () => {
 
   it("should get all especies", async () => {
+
     const res = await testServer
-      .post("/especies")
-      .send({ nome: "Cachorro" });
-
-    expect(res.statusCode).toEqual(StatusCodes.CREATED);
-
-    const res2 = await testServer
       .get("/especies")
       .send();
 
-    expect(Number(res2.header["x-total-count"])).toBeGreaterThan(0);
-    expect(res2.statusCode).toEqual(StatusCodes.OK);
-    expect(res2.body.length).toBeGreaterThan(0);
+    expect(Number(res.header["x-total-count"])).toBeGreaterThan(0);
+    expect(res.statusCode).toEqual(StatusCodes.OK);
+    expect(res.body.length).toBeGreaterThan(0);
   });
 });
