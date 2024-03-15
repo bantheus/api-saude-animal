@@ -7,6 +7,7 @@ beforeAll(async () => {
     data: {
       id: "f7ecbad9-0fe6-445b-a18c-bb157a554fb8",
       nome: "Especie 1",
+      slug: "especie-1"
     }
   });
 });

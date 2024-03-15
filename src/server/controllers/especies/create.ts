@@ -5,7 +5,7 @@ import { z } from "zod";
 import { validation } from "../../../shared/middlewares";
 import { especiesProviders } from "../../providers/especies";
 
-interface IBodyProps extends Omit<Especie, "id" | "createdAt" | "updatedAt"> { }
+interface IBodyProps extends Omit<Especie, "id" | "slug" | "createdAt" | "updatedAt"> { }
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(z.object({
