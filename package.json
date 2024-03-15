@@ -17,6 +17,9 @@
     "docker:down": "docker-compose down db_tests",
     "test": "npm run docker:up && jest -i"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seeds.ts"
+  },
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "@types/jest": "^29.5.12",

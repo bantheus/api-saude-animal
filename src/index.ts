@@ -11,6 +11,8 @@ if (process.env.IS_LOCALHOST !== "true") {
   try {
     execSync("npx prisma migrate deploy");
     console.log("Prisma migrations executed successfully!");
+    execSync("npx prisma db seed");
+    console.log("Prisma seeds executed successfully!");
     startServer();
   } catch (error) {
     console.error("Error executing Prisma migrations:", error);
