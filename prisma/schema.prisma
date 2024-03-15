@@ -14,4 +14,29 @@ model Especie {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  animais Animal[]
+
+  @@index(fields: [nome])
+}
+
+model Animal {
+  id        String  @id @default(uuid())
+  nome      String
+  slug      String
+  especie   Especie @relation(fields: [especieId], references: [id], onUpdate: Cascade)
+  especieId String
+  sexo      Sexo
+  peso      Float
+  foto      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index(fields: [nome, especieId, sexo])
+}
+
+enum Sexo {
+  MACHO
+  FEMEA
 }
