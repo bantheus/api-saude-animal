@@ -5,7 +5,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = "
   try {
     const result = await db.especie.findMany({
       skip: (page - 1) * limit,
-      take: limit,
+      take: parseInt(limit.toString()),
       where: {
         nome: {
           contains: filter

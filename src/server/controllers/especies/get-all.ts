@@ -17,7 +17,7 @@ export const getAllValidation = validation((getSchema) => ({
     }).min(1, {
       message: "Deve ser um número maior que 0"
     }).optional(),
-    id: z.string().uuid({ message: "ID inválido" }).optional().default(""),
+    id: z.string().uuid({ message: "ID inválido" }).optional(),
     filter: z.string().optional(),
   }))
 }));
