@@ -8,7 +8,8 @@ export const getAll = async (page: number, limit: number, filter: string, id = "
       take: parseInt(limit.toString()),
       where: {
         nome: {
-          contains: filter
+          contains: filter,
+          mode: "insensitive"
         }
       }
     });

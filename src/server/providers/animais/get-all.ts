@@ -5,18 +5,27 @@ export const getAll = async (page: number, limit: number, filter: string, id = "
   try {
     const result = await db.animal.findMany({
       skip: (page - 1) * limit,
-      take: limit,
+      take: parseInt(limit.toString()),
       where: {
         OR: [
           {
             nome: {
-              contains: filter
+              contains: filter,
+              mode: "insensitive"
             },
           },
           {
             especieId: filter
+
           }
         ]
+      },
+      include: {
+        especie: {
+          select: {
+            nome: true
+          }
+        }
       }
     });
 
