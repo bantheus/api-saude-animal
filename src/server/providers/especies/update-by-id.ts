@@ -20,8 +20,6 @@ export const updateById = async (id: string, especie: Omit<Especie, "id" | "slug
       return new Error("❌ Espécie não encontrada.");
     }
 
-    console.log("✅ Espécie atualizada com sucesso.");
-
     return;
 
   } catch (err) {

@@ -13,8 +13,6 @@ export const getById = async (id: string): Promise<Especie | Error> => {
       return new Error("❌ Espécie não encontrada.");
     }
 
-    console.log("✅ Espécie encontrada com sucesso.");
-
     return result;
 
   } catch (err) {

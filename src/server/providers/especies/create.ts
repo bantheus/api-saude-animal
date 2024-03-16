@@ -17,8 +17,6 @@ export const create = async (especie: Omit<Especie, "id" | "createddAt" | "updat
       throw new Error("❌ Erro ao criar espécie.");
     }
 
-    console.log("✅ Espécie criada com sucesso.");
-
     return result.id;
 
   } catch (err) {

@@ -2,19 +2,19 @@ import { db } from "../../lib/prisma";
 
 export const deleteById = async (id: string): Promise<void | Error> => {
   try {
-    const result = await db.especie.delete({
+    const result = await db.animal.delete({
       where: {
         id,
       },
     });
 
     if (!result) {
-      return new Error("❌ Espécie não encontrada.");
+      return new Error("❌ Animal não encontrado.");
     }
 
     return;
   } catch (err) {
     console.error(err);
-    return new Error("❌ Erro ao deletar espécie.");
+    return new Error("❌ Erro ao deletar animal.");
   }
 };

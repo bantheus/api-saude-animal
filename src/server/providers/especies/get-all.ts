@@ -27,8 +27,6 @@ export const getAll = async (page: number, limit: number, filter: string, id = "
       return [especie];
     }
 
-    console.log("✅ Espécies encontradas com sucesso.");
-
     return result.length ? result : [];
   } catch (err) {
     console.error(err);
