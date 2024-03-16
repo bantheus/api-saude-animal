@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { StatusCodes } from "http-status-codes";
 import { testServer } from "../jest.setup";
 
@@ -6,7 +7,7 @@ describe("Especies - create", () => {
   it("should create a new especie", async () => {
     const res = await testServer
       .post("/especies")
-      .send({ nome: "Cachorro" });
+      .send({ nome: faker.lorem.word() });
 
     expect(res.statusCode).toEqual(StatusCodes.CREATED);
     expect(typeof res.body).toEqual("object");
@@ -15,7 +16,7 @@ describe("Especies - create", () => {
   it("should not create a new especie with a name that is too short", async () => {
     const res = await testServer
       .post("/especies")
-      .send({ nome: "" });
+      .send({ nome: faker.lorem.words(0) });
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.body).toHaveProperty("errors.body.nome");
@@ -24,7 +25,7 @@ describe("Especies - create", () => {
   it("should not create a new especie with a name that is too long", async () => {
     const res = await testServer
       .post("/especies")
-      .send({ nome: "a".repeat(256) });
+      .send({ nome: faker.lorem.words(256) });
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.body).toHaveProperty("errors.body.nome");

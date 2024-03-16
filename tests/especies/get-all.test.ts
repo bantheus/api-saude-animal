@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { StatusCodes } from "http-status-codes";
 import { db } from "../../src/server/lib/prisma";
 import { testServer } from "../jest.setup";
@@ -5,9 +6,9 @@ import { testServer } from "../jest.setup";
 beforeAll(async () => {
   await db.especie.create({
     data: {
-      id: "f7ecbad9-0fe6-445b-a18c-bb157a554fb8",
-      nome: "Especie 1",
-      slug: "especie-1"
+      id: faker.string.uuid(),
+      nome: faker.lorem.word(),
+      slug: faker.lorem.slug(),
     }
   });
 });

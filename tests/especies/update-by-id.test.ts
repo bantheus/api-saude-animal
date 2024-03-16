@@ -1,15 +1,20 @@
+import { faker } from "@faker-js/faker";
 import { StatusCodes } from "http-status-codes";
 import { db } from "../../src/server/lib/prisma";
 import { testServer } from "../jest.setup";
 
+let especieId: string;
+
 beforeAll(async () => {
-  await db.especie.create({
+  const especie = await db.especie.create({
     data: {
-      id: "f7ecbad9-0fe6-445b-a18c-bb157a554fb8",
-      nome: "Especie 1",
-      slug: "especie-1"
+      id: faker.string.uuid(),
+      nome: faker.lorem.word(),
+      slug: faker.lorem.slug(),
     }
   });
+
+  especieId = especie.id;
 });
 
 afterAll(async () => {
@@ -22,9 +27,9 @@ describe("Especies - update by id", () => {
 
   it("should update a especie", async () => {
     const res2 = await testServer
-      .put("/especies/f7ecbad9-0fe6-445b-a18c-bb157a554fb8")
+      .put(`/especies/${especieId}`)
       .send({
-        nome: "Especie 2",
+        nome: faker.lorem.word(),
       });
 
     expect(res2.statusCode).toEqual(StatusCodes.NO_CONTENT);
@@ -34,7 +39,7 @@ describe("Especies - update by id", () => {
     const res = await testServer
       .put("/especies/1")
       .send({
-        nome: "Especie 2",
+        nome: faker.lorem.word(),
 
       });
 
@@ -44,9 +49,9 @@ describe("Especies - update by id", () => {
 
   it("should not create a new especie with a name that is too short", async () => {
     const res = await testServer
-      .put("/especies/f7ecbad9-0fe6-445b-a18c-bb157a554fb8")
+      .put(`/especies/${especieId}`)
       .send({
-        nome: "",
+        nome: faker.lorem.words(0),
       });
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
@@ -55,9 +60,9 @@ describe("Especies - update by id", () => {
 
   it("should not create a new especie with a name that is too long", async () => {
     const res = await testServer
-      .put("/especies/f7ecbad9-0fe6-445b-a18c-bb157a554fb8")
+      .put(`/especies/${especieId}`)
       .send({
-        nome: "a".repeat(256),
+        nome: faker.lorem.words(256),
       });
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
@@ -66,7 +71,7 @@ describe("Especies - update by id", () => {
 
   it("should not create a new especie without a name", async () => {
     const res = await testServer
-      .put("/especies/f7ecbad9-0fe6-445b-a18c-bb157a554fb8")
+      .put(`/especies/${especieId}`)
       .send({});
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
