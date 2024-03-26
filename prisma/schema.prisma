@@ -34,7 +34,8 @@ model Animal {
   updatedAt DateTime @updatedAt
 
   historicos Historico[]
-  consultas  Consultas[]
+  consultas  Consulta[]
+  vacinas    Vacina[]
 
   @@index(fields: [nome, especieId, sexo])
 }
@@ -55,7 +56,7 @@ model Historico {
   @@index(fields: [data, titulo, animalId])
 }
 
-model Consultas {
+model Consulta {
   id        String   @id @default(uuid())
   data      DateTime
   hora      DateTime
@@ -70,6 +71,22 @@ model Consultas {
   updatedAt DateTime @updatedAt
 
   @@index(fields: [data, titulo, animalId])
+}
+
+model Vacina {
+  id        String   @id @default(uuid())
+  nome      String
+  slug      String
+  descricao String
+  data      DateTime
+
+  animal   Animal @relation(fields: [animalId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  animalId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index(fields: [nome, data, animalId])
 }
 
 enum Sexo {
