@@ -34,6 +34,7 @@ model Animal {
   updatedAt DateTime @updatedAt
 
   historicos Historico[]
+  consultas  Consultas[]
 
   @@index(fields: [nome, especieId, sexo])
 }
@@ -41,6 +42,23 @@ model Animal {
 model Historico {
   id        String   @id @default(uuid())
   data      DateTime
+  titulo    String
+  slug      String
+  descricao String
+
+  animal   Animal @relation(fields: [animalId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  animalId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index(fields: [data, titulo, animalId])
+}
+
+model Consultas {
+  id        String   @id @default(uuid())
+  data      DateTime
+  hora      DateTime
   titulo    String
   slug      String
   descricao String
