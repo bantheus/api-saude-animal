@@ -5,6 +5,7 @@ import { animalRouter } from "./routes/animais";
 import { consultaRouter } from "./routes/consulta";
 import { especieRouter } from "./routes/especies";
 import { historicoRouter } from "./routes/historico";
+import { vacinaRouter } from "./routes/vacina";
 
 const server = express();
 
@@ -15,5 +16,6 @@ server.use(especieRouter);
 server.use(animalRouter);
 server.use(historicoRouter);
 server.use(consultaRouter);
+server.use(vacinaRouter);
 
 export { server };

@@ -2,7 +2,7 @@ import { db } from "../../lib/prisma";
 
 export const deleteById = async (id: string): Promise<void | Error> => {
   try {
-    const result = await db.consulta.delete({
+    const result = await db.vacina.delete({
       where: {
         id,
       },
@@ -15,6 +15,6 @@ export const deleteById = async (id: string): Promise<void | Error> => {
     return;
   } catch (err) {
     console.error(err);
-    return new Error("❌ Erro ao deletar consulta.");
+    return new Error("❌ Erro ao deletar vacina.");
   }
 };

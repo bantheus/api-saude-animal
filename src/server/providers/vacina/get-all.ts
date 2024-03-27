@@ -1,15 +1,15 @@
-import { Consulta } from "@prisma/client";
+import { Vacina } from "@prisma/client";
 import { db } from "../../lib/prisma";
 
-export const getAll = async (page: number, limit: number, filter: string, id = ""): Promise<Consulta[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, id = ""): Promise<Vacina[] | Error> => {
   try {
-    const result = await db.consulta.findMany({
+    const result = await db.vacina.findMany({
       skip: (page - 1) * limit,
       take: parseInt(limit.toString()),
       where: {
         OR: [
           {
-            titulo: {
+            nome: {
               contains: filter,
               mode: "insensitive"
             },
@@ -30,17 +30,17 @@ export const getAll = async (page: number, limit: number, filter: string, id = "
     });
 
     if (id !== "") {
-      const consulta = await db.consulta.findFirst({
+      const vacina = await db.vacina.findFirst({
         where: {
           id
         }
       });
 
-      if (!consulta) {
+      if (!vacina) {
         throw new Error("❌ Registro não encontrado.");
       }
 
-      return [consulta];
+      return [vacina];
     }
 
     return result.length ? result : [];

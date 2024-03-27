@@ -1,9 +1,9 @@
-import { Consulta } from "@prisma/client";
+import { Vacina } from "@prisma/client";
 import { db } from "../../lib/prisma";
 
-export const getById = async (id: string): Promise<Consulta | Error> => {
+export const getById = async (id: string): Promise<Vacina | Error> => {
   try {
-    const result = await db.consulta.findUnique({
+    const result = await db.vacina.findUnique({
       where: {
         id
       }
@@ -16,6 +16,6 @@ export const getById = async (id: string): Promise<Consulta | Error> => {
     return result;
   } catch (err) {
     console.error(err);
-    return new Error("❌ Erro ao buscar consulta.");
+    return new Error("❌ Erro ao buscar vacina.");
   }
 };

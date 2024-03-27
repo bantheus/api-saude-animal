@@ -2,9 +2,9 @@ import { db } from "../../lib/prisma";
 
 export const count = async (filter = ""): Promise<number | Error> => {
   try {
-    const result = db.consulta.count({
+    const result = db.vacina.count({
       where: {
-        titulo: {
+        nome: {
           contains: filter,
           mode: "insensitive"
         }

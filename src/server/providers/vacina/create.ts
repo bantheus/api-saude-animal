@@ -1,14 +1,14 @@
-import { Consulta } from "@prisma/client";
+import { Vacina } from "@prisma/client";
 import { slugfy } from "../../../shared/slugfy";
 import { db } from "../../lib/prisma";
 
-export const create = async (consulta: Omit<Consulta, "id" | "createddAt" | "updatedAt">): Promise<string | Error> => {
-  const slug = slugfy(consulta.titulo);
+export const create = async (vacina: Omit<Vacina, "id" | "createddAt" | "updatedAt">): Promise<string | Error> => {
+  const slug = slugfy(vacina.nome);
 
   try {
     const animalExist = await db.animal.findFirst({
       where: {
-        id: consulta.animalId
+        id: vacina.animalId
       }
     });
 
@@ -16,21 +16,21 @@ export const create = async (consulta: Omit<Consulta, "id" | "createddAt" | "upd
       throw new Error("❌ Animal não encontrado.");
     }
 
-    const result = await db.consulta.create({
+    const result = await db.vacina.create({
       data: {
-        ...consulta,
+        ...vacina,
         slug
       }
     });
 
     if (typeof result.id !== "string") {
-      throw new Error("❌ Erro ao criar histórico.");
+      throw new Error("❌ Erro ao criar vacina.");
     }
 
     return result.id;
 
   } catch (err) {
     console.error(err);
-    return Error("❌ Erro ao criar histórico.");
+    return Error("❌ Erro ao criar vacina.");
   }
 };

@@ -1,14 +1,14 @@
-import { Consulta } from "@prisma/client";
+import { Vacina } from "@prisma/client";
 import { slugfy } from "../../../shared/slugfy";
 import { db } from "../../lib/prisma";
 
-export const updateById = async (id: string, consulta: Omit<Consulta, "id" | "slug" | "createdAt" | "updatedAt">): Promise<void | Error> => {
-  const slug = slugfy(consulta.titulo);
+export const updateById = async (id: string, vacina: Omit<Vacina, "id" | "slug" | "createdAt" | "updatedAt">): Promise<void | Error> => {
+  const slug = slugfy(vacina.nome);
 
   try {
     const animalExist = await db.animal.findFirst({
       where: {
-        id: consulta.animalId
+        id: vacina.animalId
       }
     });
 
@@ -16,12 +16,12 @@ export const updateById = async (id: string, consulta: Omit<Consulta, "id" | "sl
       throw new Error("❌ Animal não encontrado.");
     }
 
-    const result = await db.consulta.update({
+    const result = await db.vacina.update({
       where: {
         id,
       },
       data: {
-        ...consulta,
+        ...vacina,
         slug
       }
     });
