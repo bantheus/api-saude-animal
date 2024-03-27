@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { vacinaController } from "../../controllers/vacina";
+import { vacinaController } from "../../controllers";
 
 const vacinaRouter = Router();
 

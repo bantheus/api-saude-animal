@@ -15,7 +15,7 @@ export const createValidation = validation((getSchema) => ({
     especieId: z.string({ required_error: "O id da espécie é obrigatório" }),
     sexo: z.enum(["MACHO", "FEMEA"], { required_error: "Sexo é obrigatório" }),
     peso: z.number({ required_error: "Peso é obrigatório" })
-      .min(0, { message: "Peso deve ser maior ou igual a 0" }),
+      .min(0.1, { message: "Peso deve ser maior ou igual a 0.1" }),
     foto: z.string({ required_error: "Foto é obrigatório" })
       .url({ message: "Foto deve ser uma URL válida" }),
   })),

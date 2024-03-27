@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { consultaController } from "../../controllers/consulta";
+import { consultaController } from "../../controllers";
 
 const consultaRouter = Router();
 
