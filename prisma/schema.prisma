@@ -89,6 +89,18 @@ model Vacina {
   @@index(fields: [nome, data, animalId])
 }
 
+model Usuario {
+  id       String   @id @default(uuid())
+  nome     String
+  email    String   @unique
+  senha    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index(fields: [nome, email])
+}
+
 enum Sexo {
   MACHO
   FEMEA
