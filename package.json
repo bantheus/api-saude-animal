@@ -22,7 +22,9 @@
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.12",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.3.2",
     "dotenv-cli": "^7.4.1",
     "express": "^4.18.2",

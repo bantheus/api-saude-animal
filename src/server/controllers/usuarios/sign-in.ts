@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 import { validation } from "../../../shared/middlewares";
+import { PasswordCrypto } from "../../../shared/password-crypto";
 import { usuarioProviders } from "../../providers/usuarios";
 
 interface IBodyProps extends Omit<Usuario, "id" | "nome" | "createdAt" | "updatedAt"> { }
@@ -29,7 +30,9 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
     });
   }
 
-  if (senha !== result.senha) {
+  const passwordMatch = await PasswordCrypto.verifyPassword(senha, result.senha);
+
+  if (!passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: "Email ou senha inválidos"
