@@ -1,3 +1,4 @@
+import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import { router } from "./routes";
@@ -10,6 +11,9 @@ import { vacinaRouter } from "./routes/vacina";
 
 const server = express();
 
+server.use(cors({
+  origin: process.env.CORS_ORIGIN?.split(";") || []
+}));
 server.use(express.json());
 
 server.use(router);
