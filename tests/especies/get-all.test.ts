@@ -26,10 +26,20 @@ describe("Especies - get all", () => {
 
     const res = await testServer
       .get("/especies")
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send();
 
     expect(Number(res.header["x-total-count"])).toBeGreaterThan(0);
     expect(res.statusCode).toEqual(StatusCodes.OK);
     expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  it("should not get all especies without a token", async () => {
+    const res = await testServer
+      .get("/especies")
+      .send();
+
+    expect(res.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
+    expect(res.body).toHaveProperty("erros.default");
   });
 });

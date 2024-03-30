@@ -29,6 +29,7 @@ describe("Especies - get by id", () => {
   it("should get especie by id", async () => {
     const res = await testServer
       .get(`/especies/${especieId}`)
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send();
 
     expect(res.statusCode).toEqual(StatusCodes.OK);
@@ -38,9 +39,19 @@ describe("Especies - get by id", () => {
   it("should not get especie by id that does not exist", async () => {
     const res = await testServer
       .get("/especies/1")
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send();
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.body).toHaveProperty("errors.params.id");
+  });
+
+  it("should not get especie by id without a token", async () => {
+    const res = await testServer
+      .get(`/especies/${especieId}`)
+      .send();
+
+    expect(res.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
+    expect(res.body).toHaveProperty("erros.default");
   });
 });

@@ -28,6 +28,7 @@ describe("Especies - delete by id", () => {
   it("should delete a especie", async () => {
     const res2 = await testServer
       .delete(`/especies/${especieId}`)
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send();
 
     expect(res2.statusCode).toEqual(StatusCodes.NO_CONTENT);
@@ -36,9 +37,19 @@ describe("Especies - delete by id", () => {
   it("should not delete a especie that does not exist", async () => {
     const res = await testServer
       .delete("/especies/1")
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send();
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.body).toHaveProperty("errors.params.id");
+  });
+
+  it("should not delete a especie without a token", async () => {
+    const res = await testServer
+      .delete(`/especies/${especieId}`)
+      .send();
+
+    expect(res.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
+    expect(res.body).toHaveProperty("erros.default");
   });
 });

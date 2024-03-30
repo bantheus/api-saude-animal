@@ -28,6 +28,7 @@ describe("Especies - update by id", () => {
   it("should update a especie", async () => {
     const res2 = await testServer
       .put(`/especies/${especieId}`)
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send({
         nome: faker.lorem.word(),
       });
@@ -38,6 +39,7 @@ describe("Especies - update by id", () => {
   it("should not update a especie that does not exist", async () => {
     const res = await testServer
       .put("/especies/1")
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send({
         nome: faker.lorem.word(),
 
@@ -50,6 +52,7 @@ describe("Especies - update by id", () => {
   it("should not create a new especie with a name that is too short", async () => {
     const res = await testServer
       .put(`/especies/${especieId}`)
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send({
         nome: faker.lorem.words(0),
       });
@@ -61,6 +64,7 @@ describe("Especies - update by id", () => {
   it("should not create a new especie with a name that is too long", async () => {
     const res = await testServer
       .put(`/especies/${especieId}`)
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send({
         nome: faker.lorem.words(256),
       });
@@ -72,9 +76,21 @@ describe("Especies - update by id", () => {
   it("should not create a new especie without a name", async () => {
     const res = await testServer
       .put(`/especies/${especieId}`)
+      .set("Authorization", `Bearer ${process.env.TEST_ACCESS_TOKEN}`)
       .send({});
 
     expect(res.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.body).toHaveProperty("errors.body.nome");
+  });
+
+  it("should not update a especie without a token", async () => {
+    const res = await testServer
+      .put(`/especies/${especieId}`)
+      .send({
+        nome: faker.lorem.word(),
+      });
+
+    expect(res.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
+    expect(res.body).toHaveProperty("erros.default");
   });
 });

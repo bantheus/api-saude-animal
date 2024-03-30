@@ -9,7 +9,7 @@ beforeAll(async () => {
   const user = await db.usuario.create({
     data: {
       nome: faker.lorem.words(),
-      email: "teste@teste.com",
+      email: "teste1@teste.com",
       senha: "12345678"
     }
   });
