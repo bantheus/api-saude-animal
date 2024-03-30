@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 import { validation } from "../../../shared/middlewares";
+import { jwtService } from "../../../shared/middlewares/jwt-service";
 import { PasswordCrypto } from "../../../shared/password-crypto";
 import { usuarioProviders } from "../../providers/usuarios";
 
@@ -40,5 +41,15 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
     });
   }
 
-  return res.status(StatusCodes.OK).json({ accessToken: "teste.teste.teste" });
+  const accessToken = jwtService.sign({ uid: result.id });
+
+  if (accessToken === "JWT_SECRET not found in .env file.") {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: "Erro ao gerar token de autenticação"
+      }
+    });
+  }
+
+  return res.status(StatusCodes.OK).json({ accessToken });
 };
